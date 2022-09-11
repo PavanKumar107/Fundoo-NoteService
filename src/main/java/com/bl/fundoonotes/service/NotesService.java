@@ -92,7 +92,7 @@ public class NotesService implements INotesService{
 		}
 		throw new NotesNotFoundException(400,"Token not find");
 	}
-	
+
 	@Override
 	public NotesModel archeiveNoteById(Long id, String token) {
 		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
@@ -104,10 +104,10 @@ public class NotesService implements INotesService{
 				return isNotesPresent.get();
 			}
 			throw new NotesNotFoundException(400,"Notes not present");	
-			}
+		}
 		throw new NotesNotFoundException(400,"Token not find");
 	}
-	
+
 	@Override
 	public NotesModel unArcheiveNoteById(Long id, String token) {
 		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
@@ -119,10 +119,10 @@ public class NotesService implements INotesService{
 				return isNotesPresent.get();
 			}
 			throw new NotesNotFoundException(400,"Notes not present");	
-			}
+		}
 		throw new NotesNotFoundException(400,"Token not find");
 	}
-	
+
 	@Override
 	public NotesModel trashNote(Long id, String token) {
 		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
@@ -134,10 +134,10 @@ public class NotesService implements INotesService{
 				return isNotesPresent.get();
 			}
 			throw new NotesNotFoundException(400,"Notes not present");	
-			}
+		}
 		throw new NotesNotFoundException(400,"Token not find");
 	}
-	
+
 	@Override
 	public NotesModel restoreNote(Long id, String token) {
 		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
@@ -149,10 +149,10 @@ public class NotesService implements INotesService{
 				return isNotesPresent.get();
 			}
 			throw new NotesNotFoundException(400,"Notes not present");	
-			}
+		}
 		throw new NotesNotFoundException(400,"Token not find");
 	}
-	
+
 	@Override
 	public Response deleteNote(Long id, String token) {
 		Long userId = tokenUtil.decodeToken(token);
@@ -161,6 +161,9 @@ public class NotesService implements INotesService{
 			Optional<NotesModel> isIdPresent = notesRepository.findById(id);
 			if(isIdPresent.isPresent()) {
 				notesRepository.delete(isIdPresent.get());
+				String body = "Note deleted successfully with Id"+isIdPresent.get().getId();
+				String subject = "Note deleted Successfully";
+				mailService.send(isIdPresent.get().getEmailId(), subject, body);
 				return new Response("Success", 200, isIdPresent.get());
 			} else {
 				throw new NotesNotFoundException(400, "Notes not found");
