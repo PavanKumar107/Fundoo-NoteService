@@ -171,4 +171,52 @@ public class NotesService implements INotesService{
 		}
 		throw new NotesNotFoundException(400, "Invalid token");
 	}
+	
+	@Override
+	public NotesModel changeNoteColor(Long id,String color,String token) {
+		Long userId = tokenUtil.decodeToken(token);
+		Optional<NotesModel> isNotePresent = notesRepository.findById(userId);
+		if(isNotePresent.isPresent()) {
+			Optional<NotesModel>isNotesPresent = notesRepository.findById(id);
+			if(isNotesPresent.isPresent()) {
+				isNotesPresent.get().setColor(color);
+				notesRepository.save(isNotesPresent.get());
+				return isNotesPresent.get();
+			}
+			throw new NotesNotFoundException(400,"Notes not present");	
+		}
+		throw new NotesNotFoundException(400,"Token not find");
+	}
+	
+	@Override
+	public NotesModel pinNote(Long id,String token) {
+		Long userId = tokenUtil.decodeToken(token);
+		Optional<NotesModel> isNotePresent = notesRepository.findById(userId);
+		if(isNotePresent.isPresent()) {
+			Optional<NotesModel>isNotesPresent = notesRepository.findById(id);
+			if(isNotesPresent.isPresent()) {
+				isNotesPresent.get().setPin(true);
+				notesRepository.save(isNotesPresent.get());
+				return isNotesPresent.get();
+			}
+			throw new NotesNotFoundException(400,"Notes not present");	
+		}
+		throw new NotesNotFoundException(400,"Token not find");
+	}
+	
+	@Override
+	public NotesModel unPinNote(Long id,String token) {
+		Long userId = tokenUtil.decodeToken(token);
+		Optional<NotesModel> isNotePresent = notesRepository.findById(userId);
+		if(isNotePresent.isPresent()) {
+			Optional<NotesModel>isNotesPresent = notesRepository.findById(id);
+			if(isNotesPresent.isPresent()) {
+				isNotesPresent.get().setPin(false);
+				notesRepository.save(isNotesPresent.get());
+				return isNotesPresent.get();
+			}
+			throw new NotesNotFoundException(400,"Notes not present");	
+		}
+		throw new NotesNotFoundException(400,"Token not find");
+	}
 }

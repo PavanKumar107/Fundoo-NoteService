@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.bl.fundoonotes.DTO.NotesDto;
 import com.bl.fundoonotes.model.NotesModel;
@@ -113,7 +114,7 @@ public class NotesController {
 	 * Purpose: Restore Note by Id
 	 * @Param: id,token
 	 */
-	@GetMapping("/restorenote/{id}")
+	@PutMapping("/restorenote/{id}")
 	public ResponseEntity<Response> restoreNote(@PathVariable Long id,@RequestHeader String token) {
 		NotesModel notesModel = notesService.restoreNote(id,token);
 		Response response = new Response("Note restored successfully", 200, notesModel);
@@ -128,6 +129,39 @@ public class NotesController {
 	public ResponseEntity<Response> deleteNote(@PathVariable Long id,@RequestHeader String token) {
 		Response notesModel = notesService.deleteNote(id,token);
 		Response response = new Response("Note deleted successfully", 200, notesModel);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Purpose: Change Note color by id
+	 * @Param: id,token,color
+	 */
+	@PutMapping("/changenotecolor/{id}")
+	public ResponseEntity<Response> changeNoteColor(@PathVariable Long id,@RequestParam String color,@RequestHeader  String token) {
+		NotesModel notesModel = notesService.changeNoteColor(id,color,token);
+		Response response = new Response("Note color changed successfully", 200, notesModel);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Purpose: Pin Note by Id
+	 * @Param: id,token
+	 */
+	@PutMapping("/pinnote/{id}")
+	public ResponseEntity<Response> pinNote(@PathVariable Long id,@RequestHeader  String token) {
+		NotesModel notesModel = notesService.pinNote(id,token);
+		Response response = new Response("Note pinned successfully", 200, notesModel);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Purpose: Unpin Note by Id
+	 * @Param: id,token
+	 */
+	@PutMapping("/unpinnote/{id}")
+	public ResponseEntity<Response> unPinNote(@PathVariable Long id,@RequestHeader  String token) {
+		NotesModel notesModel = notesService.unPinNote(id,token);
+		Response response = new Response("Note unpinned successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }

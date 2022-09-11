@@ -25,4 +25,10 @@ public interface INotesService {
 
 	Response deleteNote(Long id, String token);
 
+	NotesModel changeNoteColor(Long id, String color,String token);
+
+	NotesModel pinNote(Long id, String token);
+
+	NotesModel unPinNote(Long id, String token);
+
 }
