@@ -9,12 +9,6 @@ public class NotesDto {
 
 	private String description;
 
-	private long userId;
-
-	private LocalDateTime registerDate;
-
-	private LocalDateTime updateDate;
-
 	private boolean trash;
 
 	private boolean isArchieve;
@@ -26,7 +20,5 @@ public class NotesDto {
 	private String emailId;
 
 	private String color;
-
-	private LocalDateTime remindertime;
 	
 }

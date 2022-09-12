@@ -48,12 +48,9 @@ public class NotesService implements INotesService{
 			if(isNotePresent.isPresent()) {
 				isNotePresent.get().setTitle(notesDto.getTitle());
 				isNotePresent.get().setDescription(notesDto.getDescription());
-				isNotePresent.get().setUserId(notesDto.getUserId());
-				isNotePresent.get().setUpdateDate(notesDto.getUpdateDate().now());
 				isNotePresent.get().setLabelId(notesDto.getLabelId());
 				isNotePresent.get().setEmailId(notesDto.getEmailId());
 				isNotePresent.get().setColor(notesDto.getColor());
-				isNotePresent.get().setRemindertime(notesDto.getRemindertime().now());
 				notesRepository.save(isNotePresent.get());
 				String body = "Note updated successfully with Id"+isNotePresent.get().getId();
 				String subject = "Note updated Successfully";

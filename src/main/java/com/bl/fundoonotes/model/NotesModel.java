@@ -48,15 +48,11 @@ public class NotesModel {
 	public NotesModel(NotesDto notesDto) {
 		this.title = notesDto.getTitle();
 		this.description = notesDto.getDescription();
-		this.userId = notesDto.getUserId();
-		this.registerDate = notesDto.getRegisterDate().now();
-		this.updateDate = notesDto.getUpdateDate();
 		this.trash = notesDto.isTrash();
 		this.isArchieve = notesDto.isArchieve();
 		this.pin = notesDto.isPin();
 		this.labelId = notesDto.getLabelId();
 		this.emailId = notesDto.getEmailId();
 		this.color = notesDto.getColor();
-		this.remindertime = notesDto.getRemindertime();
 	}
 }
