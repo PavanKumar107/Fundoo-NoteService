@@ -164,4 +164,48 @@ public class NotesController {
 		Response response = new Response("Note unpinned successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+	
+	/**
+	 * Purpose: set remainder time
+	 * @Param: id,token
+	 */
+	@PutMapping("/setremaindertime/{id}")
+	public ResponseEntity<Response> setRemainderTime(@PathVariable Long id,@RequestHeader  String token) {
+		NotesModel notesModel = notesService.unPinNote(id,token);
+		Response response = new Response("Remainder set successfully", 200, notesModel);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Purpose: Fetching pinned notes
+	 * @Param: token
+	 */
+	@GetMapping("/getallpinnednoted")
+	public ResponseEntity<Response> getAllPinnedNotes(@RequestHeader String token) {
+		List<NotesModel> notesModel = notesService.getAllPinnedNotes(token);
+		Response response = new Response("Fetching all pinned notes successfully", 200, notesModel);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Purpose: Fetching pinned notes
+	 * @Param: token
+	 */
+	@GetMapping("/getallarchievednotes")
+	public ResponseEntity<Response> getAllArchievedNotes(@RequestHeader String token) {
+		List<NotesModel> notesModel = notesService.getAllArchievedNotes(token);
+		Response response = new Response("Fetching all archieved notes sucessfully", 200, notesModel);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Purpose: Fetching all notes from trash
+	 * @Param: token
+	 */
+	@GetMapping("/getalltrashtotes")
+	public ResponseEntity<Response> getAllTrashNotes(@RequestHeader String token) {
+		List<NotesModel> notesModel = notesService.getAllTrashNotes(token);
+		Response response = new Response("Fetching all notes from trash successfully", 200, notesModel);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 }

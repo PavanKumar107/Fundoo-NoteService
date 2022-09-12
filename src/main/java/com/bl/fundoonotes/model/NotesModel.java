@@ -29,9 +29,9 @@ public class NotesModel {
 
 	private LocalDateTime updateDate;
 
-	private boolean trash;
+	private boolean Trash;
 
-	private boolean isArchieve;
+	private boolean isArchieve ;
 
 	private boolean pin;
 
@@ -48,7 +48,7 @@ public class NotesModel {
 	public NotesModel(NotesDto notesDto) {
 		this.title = notesDto.getTitle();
 		this.description = notesDto.getDescription();
-		this.trash = notesDto.isTrash();
+		this.Trash = notesDto.isTrash();
 		this.isArchieve = notesDto.isArchieve();
 		this.pin = notesDto.isPin();
 		this.labelId = notesDto.getLabelId();

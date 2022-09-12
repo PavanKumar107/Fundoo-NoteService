@@ -1,0 +1,60 @@
+package com.bl.fundoonotes.controller;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.bl.fundoonotes.DTO.LabelDto;
+import com.bl.fundoonotes.model.LabelModel;
+import com.bl.fundoonotes.service.ILabelService;
+import com.bl.fundoonotes.util.Response;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
+@RestController
+@RequestMapping("/label")
+public class LabelController {
+	
+	@Autowired
+	ILabelService labelService;
+	
+	/**
+	 * Purpose: Create label
+	 * @Param: labelDto,token
+	 */
+	@PostMapping("/addlabel")
+	public ResponseEntity<Response> addLabel(@RequestBody LabelDto labelDto,@RequestHeader String token) {
+		LabelModel labelModel = labelService.addLabel(labelDto,token);
+		Response response = new Response("Label created successfully", 200, labelModel);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Purpose: Update labels
+	 * @Param: labelDto,id,token
+	 */
+	@PutMapping("/updatelabel/{id}")
+	public ResponseEntity<Response> updateLabel(@RequestBody LabelDto labelDto,@PathVariable Long id ,@RequestHeader String token) {
+		LabelModel labelModel = labelService.updateLabel(labelDto,id,token);
+		Response response = new Response("Label updated successfully", 200, labelModel);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
+
+/**
+ * Purpose: fetch all labels
+ * @Param: token
+ */
+	@GetMapping("/getalllabels")
+	public ResponseEntity<Response> getAllLabels(@RequestHeader String token) {
+		List<LabelModel> labelModel = labelService.getAllLabels(token);
+		Response response = new Response("Fetching all labels successfully", 200, labelModel);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+}

@@ -31,4 +31,14 @@ public interface INotesService {
 
 	NotesModel unPinNote(Long id, String token);
 
+	NotesModel setRemainderTime(Long id, String token);
+	
+	List<NotesModel> getAllPinnedNotes(String token);
+
+	List<NotesModel> getAllArchievedNotes(String token);
+
+	List<NotesModel> getAllTrashNotes(String token);
+
+
+
 }

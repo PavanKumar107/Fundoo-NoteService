@@ -9,9 +9,9 @@ public class NotesDto {
 
 	private String description;
 
-	private boolean trash;
+	private boolean Trash;
 
-	private boolean isArchieve;
+	private boolean isArchieve ;
 
 	private boolean pin;
 
