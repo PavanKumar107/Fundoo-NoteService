@@ -168,17 +168,6 @@ public class NotesController {
 	}
 
 	/**
-	 * Purpose: set remainder time
-	 * @Param: id,token
-	 */
-	@PutMapping("/setremaindertime/{id}")
-	public ResponseEntity<Response> setRemainderTime(@PathVariable Long id,@RequestHeader  String token) {
-		NotesModel notesModel = notesService.unPinNote(id,token);
-		Response response = new Response("Remainder set successfully", 200, notesModel);
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
-
-	/**
 	 * Purpose: Fetching pinned notes
 	 * @Param: token
 	 */
@@ -222,10 +211,25 @@ public class NotesController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	//	@PutMapping("/addCollaborators/{id}")
-	//	public ResponseEntity<Response> addCollaborator(@RequestParam String emailId,@PathVariable Long id) {
-	//		NotesModel notesModel = notesService.addCollaborator(emailId,id);
-	//		Response response = new Response("emailid collaborated Successfull", 200, notesModel);
-	//		return new ResponseEntity<>(response, HttpStatus.OK);
-	//	}
+	/**
+	 * Purpose: to add collaborators to notes 
+	 * @Param: emailid,id,collaborator
+	 */
+	@PutMapping("/addcollaborator/{emailId}")
+	public ResponseEntity<Response> addCollaborator(@PathVariable String emailId,@RequestParam Long id,@RequestParam List<String> collaborators) {
+		NotesModel notesModel = notesService.addCollaborator(emailId,id,collaborators);
+		Response response = new Response("collaborated sucessfully", 200, notesModel);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Purpose: To set remainder time
+	 * @Param: remainder time,token,id
+	 */
+	@PutMapping("/setremaindertime/{id}")
+	public ResponseEntity<Response> setRemainderTime(@RequestParam String remainderTime,@RequestHeader String token,@PathVariable Long id) {
+		NotesModel notesModel = notesService.setRemainderTime(remainderTime,token,id);
+		Response response = new Response("Remainder time set sucessfully", 200, notesModel);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 }

@@ -1,5 +1,4 @@
 package com.bl.fundoonotes.service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +15,6 @@ import com.bl.fundoonotes.model.NotesModel;
 import com.bl.fundoonotes.repository.LabelRepository;
 import com.bl.fundoonotes.util.Response;
 import com.bl.fundoonotes.util.TokenUtil;
-
 
 /**
  *  
@@ -92,12 +90,11 @@ public class LabelService implements ILabelService {
 		if (isUserPresent) {
 			Optional<LabelModel> isIdPresent = labelRepository.findById(id);
 			if(isIdPresent.isPresent()) {
-				return new Response("Success", 200, isIdPresent.get());
+				return new Response("label deleted Successfully", 200, isIdPresent.get());
 			} else {
 				throw new NotesNotFoundException(400, "Label not found");
 			}		
 		}
 		throw new NotesNotFoundException(400, "Invalid token");
 	}
-
 }

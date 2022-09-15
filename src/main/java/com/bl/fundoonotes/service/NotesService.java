@@ -1,5 +1,7 @@
 package com.bl.fundoonotes.service;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +24,8 @@ import com.bl.fundoonotes.util.TokenUtil;
  * @author: Pavan Kumar G V 
  * @version: 4.15.1.RELEASE
  * 
- */
+ **/
+
 @Service
 public class NotesService implements INotesService{
 
@@ -41,11 +44,11 @@ public class NotesService implements INotesService{
 	@Autowired
 	LabelRepository labelRepository;
 
-	
+
 	//Purpose:Service to create note
 	@Override
 	public NotesModel createNote(NotesDto notesDto,String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://FUNDOO-USERSERVICE:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
 			NotesModel model = new NotesModel(notesDto);
 			model.setRegisterDate(LocalDateTime.now());
@@ -61,7 +64,7 @@ public class NotesService implements INotesService{
 	//Purpose:Service to update note
 	@Override
 	public NotesModel updateNote(NotesDto notesDto, Long id,String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://FUNDOO-USERSERVICE:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
 			Optional<NotesModel>isNotePresent = notesRepository.findById(id);
 			if(isNotePresent.isPresent()) {
@@ -85,7 +88,7 @@ public class NotesService implements INotesService{
 	//Purpose:Service to add read all notes
 	@Override
 	public List<NotesModel> readAllNotes(String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://FUNDOO-USERSERVICE:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
 			List<NotesModel> readAllNotes = notesRepository.findAll();
 			if(readAllNotes.size()>0) {
@@ -100,7 +103,7 @@ public class NotesService implements INotesService{
 	//Purpose:Method to read notes by id
 	@Override
 	public Optional<NotesModel> readNotesById(Long id,String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://FUNDOO-USERSERVICE:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
 			Optional<NotesModel>isNotesPresent = notesRepository.findById(id);
 			if(isNotesPresent.isPresent()) {
@@ -115,7 +118,7 @@ public class NotesService implements INotesService{
 	//Purpose:Method to archive notes
 	@Override
 	public NotesModel archeiveNoteById(Long id, String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://FUNDOO-USERSERVICE:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
 			Optional<NotesModel>isNotesPresent = notesRepository.findById(id);
 			if(isNotesPresent.isPresent()) {
@@ -131,7 +134,7 @@ public class NotesService implements INotesService{
 	//Purpose:Method to unarchive notes
 	@Override
 	public NotesModel unArcheiveNoteById(Long id, String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://FUNDOO-USERSERVICE:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
 			Optional<NotesModel>isNotesPresent = notesRepository.findById(id);
 			if(isNotesPresent.isPresent()) {
@@ -147,7 +150,7 @@ public class NotesService implements INotesService{
 	//Purpose:Method to add note to the trash
 	@Override
 	public NotesModel trashNote(Long id, String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://FUNDOO-USERSERVICE:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
 			Optional<NotesModel>isNotesPresent = notesRepository.findById(id);
 			if(isNotesPresent.isPresent()) {
@@ -163,7 +166,7 @@ public class NotesService implements INotesService{
 	//Purpose:Method to restore the notes
 	@Override
 	public NotesModel restoreNote(Long id, String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://FUNDOO-USERSERVICE:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
 			Optional<NotesModel>isNotesPresent = notesRepository.findById(id);
 			if(isNotesPresent.isPresent()) {
@@ -179,7 +182,7 @@ public class NotesService implements INotesService{
 	//Purpose:Method to delete the note
 	@Override
 	public Response deleteNote(Long id, String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://FUNDOO-USERSERVICE:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
 			Optional<NotesModel> isIdPresent = notesRepository.findById(id);
 			if(isIdPresent.isPresent()) {
@@ -198,7 +201,7 @@ public class NotesService implements INotesService{
 	//Purpose:Method to change the note color
 	@Override
 	public NotesModel changeNoteColor(Long id,String color,String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://FUNDOO-USERSERVICE:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
 			Optional<NotesModel>isNotesPresent = notesRepository.findById(id);
 			if(isNotesPresent.isPresent()) {
@@ -214,7 +217,7 @@ public class NotesService implements INotesService{
 	//Purpose:Method to pin the note
 	@Override
 	public NotesModel pinNote(Long id,String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://FUNDOO-USERSERVICE:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
 			Optional<NotesModel>isNotesPresent = notesRepository.findById(id);
 			if(isNotesPresent.isPresent()) {
@@ -230,7 +233,7 @@ public class NotesService implements INotesService{
 	//Purpose:Method to unpin the note
 	@Override
 	public NotesModel unPinNote(Long id,String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://FUNDOO-USERSERVICE:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
 			Optional<NotesModel>isNotesPresent = notesRepository.findById(id);
 			if(isNotesPresent.isPresent()) {
@@ -243,25 +246,10 @@ public class NotesService implements INotesService{
 		throw new NotesNotFoundException(400,"Invalid token");
 	}
 
-	//Purpose:Method to set remainder time
-	@Override
-	public NotesModel setRemainderTime(Long id,String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
-		if (isUserPresent) {
-			Optional<NotesModel>isNotesPresent = notesRepository.findById(id);
-			if(isNotesPresent.isPresent()) {
-				isNotesPresent.get().setRemindertime(LocalDateTime.now());
-				notesRepository.save(isNotesPresent.get());
-				return isNotesPresent.get();
-			}
-			throw new NotesNotFoundException(400,"Notes not present");	
-		}
-		throw new NotesNotFoundException(400,"Invalid token");
-	}
 	//Purpose:Method to fethch all pinned notes
 	@Override
 	public List<NotesModel> getAllPinnedNotes(String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://FUNDOO-USERSERVICE:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
 			List<NotesModel> isNotesPresent = notesRepository.findAllByPin();
 			if (isNotesPresent.size()>0) {
@@ -275,7 +263,7 @@ public class NotesService implements INotesService{
 	//Purpose:Method to fetch all archieved notes
 	@Override
 	public List<NotesModel> getAllArchievedNotes(String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://FUNDOO-USERSERVICE:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
 			List<NotesModel> isNotePresent = notesRepository.findAllByisArchieve();
 			if(isNotePresent.size() > 0) {
@@ -289,7 +277,7 @@ public class NotesService implements INotesService{
 	//Purpose:Method to fetch all notes from the trash
 	@Override
 	public List<NotesModel> getAllTrashNotes(String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://FUNDOO-USERSERVICE:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
 			List<NotesModel> isNotePresent = notesRepository.findAllByTrash();
 			if(isNotePresent.size() > 0) {
@@ -303,7 +291,7 @@ public class NotesService implements INotesService{
 	//Purpose:Method to many to many map notes and label
 	@Override
 	public NotesModel notesLabelList(Long notesId,Long labelId,String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://FUNDOO-USERSERVICE:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
 			List<LabelModel> label = new ArrayList<>();
 			Optional<LabelModel> isLabelPresent = labelRepository.findById(labelId);
@@ -323,8 +311,39 @@ public class NotesService implements INotesService{
 	}
 
 	//Purpose:Method to add collaborator
-//	@Override
-//	public NotesModel addCollaborator(String emailId,Long id) {
-//		List<NotesModel> model = new ArrayList<>();
-//		Optional<NotesModel> isNotesPresent = notesRepository.findById(id);
+	@Override
+	public NotesModel addCollaborator(String emailId,Long id,List<String> collaborators) {
+		boolean isUserPresent = restTemplate.getForObject("http://FUNDOO-USERSERVICE:8066/user/validateemail/" + emailId, Boolean.class);
+		if (isUserPresent) {
+			Optional<NotesModel> isEmailPresent = notesRepository.findById(id);
+			isEmailPresent.get().setEmailId(emailId);
+			isEmailPresent.get().setCollaborator(collaborators);
+			notesRepository.save(isEmailPresent.get());
+			return isEmailPresent.get();
+		}
+		throw new NotesNotFoundException(400, "Notes not present");
+	}
+
+	//Purpose:Method to add remaindertime
+	@Override
+	public NotesModel setRemainderTime(String remainderTime,String token,Long id) {
+		boolean isUserPresent = restTemplate.getForObject("http://FUNDOO-USERSERVICE:8066/user/validateuser/" + token, Boolean.class);
+		if (isUserPresent) {
+			Optional<NotesModel>isNotesPresent = notesRepository.findById(id);
+			if(isNotesPresent.isPresent()) {
+				LocalDate today = LocalDate.now();
+				DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+				LocalDate remainder = LocalDate.parse(remainderTime, dateTimeFormatter);
+				if(remainder.isBefore(today)) {
+					throw new NotesNotFoundException(400, "invalid remainder time");
+				}
+				isNotesPresent.get().setReminderTime(remainderTime);
+				notesRepository.save(isNotesPresent.get());
+				return isNotesPresent.get();
+			}
+			throw new NotesNotFoundException(400, "Notes not present");
+		}
+		throw new NotesNotFoundException(400, "Invalid token");
+	}
 }
+

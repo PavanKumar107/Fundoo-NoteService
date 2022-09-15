@@ -40,9 +40,6 @@ public class LabelModel {
 	private LocalDateTime registerDate;
 
 	private LocalDateTime updateDate;
-	
-//	@ManyToMany(mappedBy = "labellist")
-//	private List<NotesModel> notesList;
 
 	public LabelModel(LabelDto labelDto) {
 		this.labelName = labelDto.getLabelName();

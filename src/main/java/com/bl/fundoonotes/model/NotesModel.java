@@ -2,6 +2,7 @@ package com.bl.fundoonotes.model;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,9 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import com.bl.fundoonotes.DTO.NotesDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 /**
  *  
@@ -52,13 +54,14 @@ public class NotesModel {
 
 	private String color;
 
-	private LocalDateTime remindertime;
+	private String reminderTime;
 
+	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<LabelModel> labelList;
-
-	@ManyToMany(cascade = CascadeType.ALL)
-	private  List<NotesModel> collaborator;
+	
+	@ElementCollection(targetClass = String.class)
+	private  List<String> collaborator;
 
 	public NotesModel(NotesDto notesDto) {
 		this.title = notesDto.getTitle();
