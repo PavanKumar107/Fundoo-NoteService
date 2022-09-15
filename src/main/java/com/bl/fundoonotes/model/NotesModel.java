@@ -1,15 +1,26 @@
 package com.bl.fundoonotes.model;
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import com.bl.fundoonotes.DTO.NotesDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+/**
+ *  
+ * Purpose:Model for the notes data
+ * 
+ * @author: Pavan Kumar G V 
+ * @version: 4.15.1.RELEASE
+ * 
+ **/ 
 @Entity
 @Table(name = "notes")
 @Data
@@ -18,7 +29,7 @@ public class NotesModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
 	private String title;
 
 	private String description;
@@ -43,7 +54,11 @@ public class NotesModel {
 
 	private LocalDateTime remindertime;
 
-//	List<String> collaborator;
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<LabelModel> labelList;
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	private  List<NotesModel> collaborator;
 
 	public NotesModel(NotesDto notesDto) {
 		this.title = notesDto.getTitle();

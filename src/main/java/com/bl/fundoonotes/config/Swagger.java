@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +12,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
-
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -29,22 +27,22 @@ import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
+/**
+ *  
+ * Purpose:Swagger configuration
+ * 
+ * @author: Pavan Kumar G V 
+ * @version: 4.15.1.RELEASE
+ * 
+ **/ 
+
 @SuppressWarnings({ "ALL", "deprecation" })
 @Configuration
 @EnableSwagger2WebMvc
 @Import(SpringDataRestConfiguration.class)
 public class Swagger implements WebMvcConfigurer {
     public static final String AUTHORIZATION_HEADER = "Authorization";
-	/*@Bean
-	   public Docket api() {
-	       return new Docket(DocumentationType.SWAGGER_2)
-	               .select()
-	               .apis(RequestHandlerSelectors.any())
-	               .paths(PathSelectors.any())
-	               .build()
-	               .apiInfo(getApiInfo());
-	   }*/
-
+	
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -74,15 +72,6 @@ public class Swagger implements WebMvcConfigurer {
         authorizationScopes[0] = authorizationScope;
         return Arrays.asList(new SecurityReference(AUTHORIZATION_HEADER, authorizationScopes));
     }
-
-	/*private ApiInfo getApiInfo() {
-	       Contact contact = new Contact("Learner Management System", "http://bridgelabz.com&quot;,
-	               "sunil.patil@bridgelabz.com");
-	       return new ApiInfoBuilder().title("LMS Service Swagger API")
-	               .description("LMS Service Swagger API for Learner Management System").version("0.0.1-SNAPSHOT")
-	               .license("Apache 2.0").licenseUrl("http://www.apache.org/licenses/LICENSE-2.0").contact(contact)
-	               .build();
-	   }*/
 
     private ApiInfo apiInfo() {
         return new ApiInfo("Fundoo-NotesService",

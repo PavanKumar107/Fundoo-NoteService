@@ -5,14 +5,23 @@ import com.bl.fundoonotes.DTO.NotesDto;
 import com.bl.fundoonotes.model.NotesModel;
 import com.bl.fundoonotes.util.Response;
 
+/**
+ *  
+ * Purpose:Notes Service Interface
+ * @author: Pavan Kumar G V 
+ * @version: 4.15.1.RELEASE
+ * 
+ **/
+
+//all the method for the service are registered here
 public interface INotesService {
-	
+
 	NotesModel createNote(NotesDto notesDto,String token);
-	
+
 	NotesModel updateNote(NotesDto notesDto,Long id,String token);
-	
+
 	List<NotesModel> readAllNotes(String token);
-	
+
 	Optional<NotesModel> readNotesById(Long id,String token);
 
 	NotesModel archeiveNoteById(Long id, String token);
@@ -32,13 +41,15 @@ public interface INotesService {
 	NotesModel unPinNote(Long id, String token);
 
 	NotesModel setRemainderTime(Long id, String token);
-	
+
 	List<NotesModel> getAllPinnedNotes(String token);
 
 	List<NotesModel> getAllArchievedNotes(String token);
 
 	List<NotesModel> getAllTrashNotes(String token);
 
-
+	NotesModel notesLabelList(Long notesId, Long labelId, String token);
+//
+//	NotesModel addCollaborator(String emailId, Long id);
 
 }

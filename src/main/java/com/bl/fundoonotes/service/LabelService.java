@@ -14,9 +14,17 @@ import com.bl.fundoonotes.exception.NotesNotFoundException;
 import com.bl.fundoonotes.model.LabelModel;
 import com.bl.fundoonotes.model.NotesModel;
 import com.bl.fundoonotes.repository.LabelRepository;
+import com.bl.fundoonotes.util.Response;
 import com.bl.fundoonotes.util.TokenUtil;
 
 
+/**
+ *  
+ * Purpose:Service implementation of the Label
+ * @author: Pavan Kumar G V 
+ * @version: 4.15.1.RELEASE
+ * 
+ */
 @Service
 public class LabelService implements ILabelService {
 
@@ -32,6 +40,7 @@ public class LabelService implements ILabelService {
 	@Autowired
 	RestTemplate restTemplate;
 
+	//Purpose:Service to add label
 	@Override
 	public LabelModel addLabel(LabelDto labelDto, String token) {
 		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
@@ -43,7 +52,8 @@ public class LabelService implements ILabelService {
 		}
 		throw new NotesNotFoundException(400,"Token Invalid");
 	}
-	
+
+	//Purpose:Service to update label
 	@Override
 	public LabelModel updateLabel(LabelDto labelDto, Long id,String token) {
 		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
@@ -59,7 +69,8 @@ public class LabelService implements ILabelService {
 		}
 		throw new NotesNotFoundException(400,"Token Invalid");
 	}
-	
+
+	//Purpose:Service to fetch all the labels
 	@Override
 	public List<LabelModel> getAllLabels(String token) {
 		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
@@ -73,4 +84,20 @@ public class LabelService implements ILabelService {
 		}
 		throw new NotesNotFoundException(400,"Token Invalid");
 	}
+
+	//Purpose:Method to delete the label
+	@Override
+	public Response deleteLabel(Long id, String token) {
+		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
+		if (isUserPresent) {
+			Optional<LabelModel> isIdPresent = labelRepository.findById(id);
+			if(isIdPresent.isPresent()) {
+				return new Response("Success", 200, isIdPresent.get());
+			} else {
+				throw new NotesNotFoundException(400, "Label not found");
+			}		
+		}
+		throw new NotesNotFoundException(400, "Invalid token");
+	}
+
 }

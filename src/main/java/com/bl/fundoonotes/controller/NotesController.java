@@ -2,6 +2,8 @@ package com.bl.fundoonotes.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,7 +40,7 @@ public class NotesController {
 	 * @Param: noteDto,token
 	 */
 	@PostMapping("/createnote")
-	public ResponseEntity<Response> createNote(@RequestBody NotesDto notesDto,@RequestHeader String token) {
+	public ResponseEntity<Response> createNote(@Valid@RequestBody NotesDto notesDto,@RequestHeader String token) {
 		NotesModel notesModel = notesService.createNote(notesDto,token);
 		Response response = new Response("Note created successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);	
@@ -49,7 +51,7 @@ public class NotesController {
 	 * @Param: noteDto,id,token
 	 */
 	@PutMapping("/updatenote/{id}")
-	public ResponseEntity<Response> updateNote(@RequestBody NotesDto notesDto,@PathVariable Long id,@RequestHeader String token) {
+	public ResponseEntity<Response> updateNote(@Valid@RequestBody NotesDto notesDto,@PathVariable Long id,@RequestHeader String token) {
 		NotesModel notesModel = notesService.updateNote(notesDto,id,token);
 		Response response = new Response("Note updated successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
@@ -120,7 +122,7 @@ public class NotesController {
 		Response response = new Response("Note restored successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Purpose: Delete Note by Id
 	 * @Param: id,token
@@ -131,7 +133,7 @@ public class NotesController {
 		Response response = new Response("Note deleted successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Purpose: Change Note color by id
 	 * @Param: id,token,color
@@ -142,7 +144,7 @@ public class NotesController {
 		Response response = new Response("Note color changed successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Purpose: Pin Note by Id
 	 * @Param: id,token
@@ -153,7 +155,7 @@ public class NotesController {
 		Response response = new Response("Note pinned successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Purpose: Unpin Note by Id
 	 * @Param: id,token
@@ -164,7 +166,7 @@ public class NotesController {
 		Response response = new Response("Note unpinned successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Purpose: set remainder time
 	 * @Param: id,token
@@ -175,7 +177,7 @@ public class NotesController {
 		Response response = new Response("Remainder set successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Purpose: Fetching pinned notes
 	 * @Param: token
@@ -186,7 +188,7 @@ public class NotesController {
 		Response response = new Response("Fetching all pinned notes successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Purpose: Fetching pinned notes
 	 * @Param: token
@@ -197,7 +199,7 @@ public class NotesController {
 		Response response = new Response("Fetching all archieved notes sucessfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Purpose: Fetching all notes from trash
 	 * @Param: token
@@ -208,4 +210,22 @@ public class NotesController {
 		Response response = new Response("Fetching all notes from trash successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+
+	/**
+	 * Purpose: notes and label many to many mapping
+	 * @Param: notesId,labelId,token
+	 */
+	@GetMapping("/notesLabelList")
+	public ResponseEntity<Response> notesLabelList(@RequestParam Long notesId,@RequestParam Long labelId,@RequestHeader String token) {
+		NotesModel notesModel = notesService.notesLabelList(notesId,labelId,token);
+		Response response = new Response("notes and label mapping Successfull", 200, notesModel);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
+	//	@PutMapping("/addCollaborators/{id}")
+	//	public ResponseEntity<Response> addCollaborator(@RequestParam String emailId,@PathVariable Long id) {
+	//		NotesModel notesModel = notesService.addCollaborator(emailId,id);
+	//		Response response = new Response("emailid collaborated Successfull", 200, notesModel);
+	//		return new ResponseEntity<>(response, HttpStatus.OK);
+	//	}
 }
