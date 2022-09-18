@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 public class NotesModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private long notesId;
 
 	private String title;
 
@@ -50,18 +50,17 @@ public class NotesModel {
 
 	private Long labelId;
 
-	private String emailId;
-
 	private String color;
 
 	private String reminderTime;
 
-	@JsonIgnore
+	private String emailId;
+
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<LabelModel> labelList;
-	
+
 	@ElementCollection(targetClass = String.class)
-	private  List<String> collaborator;
+	private List<String> collaborator;
 
 	public NotesModel(NotesDto notesDto) {
 		this.title = notesDto.getTitle();

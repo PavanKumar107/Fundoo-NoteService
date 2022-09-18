@@ -50,9 +50,9 @@ public class NotesController {
 	 * Purpose: Update Note
 	 * @Param: noteDto,id,token
 	 */
-	@PutMapping("/updatenote/{id}")
-	public ResponseEntity<Response> updateNote(@Valid@RequestBody NotesDto notesDto,@PathVariable Long id,@RequestHeader String token) {
-		NotesModel notesModel = notesService.updateNote(notesDto,id,token);
+	@PutMapping("/updatenote/{notesId}")
+	public ResponseEntity<Response> updateNote(@Valid@RequestBody NotesDto notesDto,@PathVariable Long notesId,@RequestHeader String token) {
+		NotesModel notesModel = notesService.updateNote(notesDto,notesId,token);
 		Response response = new Response("Note updated successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
@@ -69,100 +69,100 @@ public class NotesController {
 	}
 
 	/**
-	 * Purpose: Read Note by Id
-	 * @Param: id,token
+	 * Purpose: Read Note by notesId
+	 * @Param: notesId,token
 	 */
-	@GetMapping("/readnotesbyid/{id}")
-	public ResponseEntity<Response> readNotesById(@PathVariable Long id,@RequestHeader String token){
-		Optional<NotesModel> notesModel = notesService.readNotesById(id,token);
+	@GetMapping("/readnotesbyid/{notesId}")
+	public ResponseEntity<Response> readNotesById(@PathVariable Long notesId,@RequestHeader String token){
+		Optional<NotesModel> notesModel = notesService.readNotesById(notesId,token);
 		Response response = new Response("Fetching notes by id successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	/**
-	 * Purpose: Archeive Note by Id
-	 * @Param: id,token
+	 * Purpose: Archeive Note by notesId
+	 * @Param: notesId,token
 	 */
-	@PutMapping("/archeivenote/{id}")
-	public ResponseEntity<Response> archeiveNoteById(@PathVariable Long id,@RequestHeader String token) {
-		NotesModel notesModel = notesService.archeiveNoteById(id,token);
+	@PutMapping("/archeivenote/{notesId}")
+	public ResponseEntity<Response> archeiveNoteById(@PathVariable Long notesId,@RequestHeader String token) {
+		NotesModel notesModel = notesService.archeiveNoteById(notesId,token);
 		Response response = new Response("Archeived notes by id successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	/**
-	 * Purpose: Unarcheive Note by Id
-	 * @Param: id,token
+	 * Purpose: Unarcheive Note by notesId
+	 * @Param: notesId,token
 	 */
-	@PutMapping("/unarcheivenote/{id}")
-	public ResponseEntity<Response> unArcheiveNoteById(@PathVariable Long id,@RequestHeader String token) {
-		NotesModel notesModel = notesService.unArcheiveNoteById(id,token);
+	@PutMapping("/unarcheivenote/{notesId}")
+	public ResponseEntity<Response> unArcheiveNoteById(@PathVariable Long notesId,@RequestHeader String token) {
+		NotesModel notesModel = notesService.unArcheiveNoteById(notesId,token);
 		Response response = new Response("Unarcheived notes by id successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	/**
-	 * Purpose:Add note to trash by Id
-	 * @Param: id,token
+	 * Purpose:Add note to trash by notesId
+	 * @Param: notesId,token
 	 */
-	@PutMapping("/trashnote/{id}")
-	public ResponseEntity<Response> trashNote(@PathVariable Long id,@RequestHeader String token) {
-		NotesModel notesModel = notesService.trashNote(id,token);
+	@PutMapping("/trashnote/{notesId}")
+	public ResponseEntity<Response> trashNote(@PathVariable Long notesId,@RequestHeader String token) {
+		NotesModel notesModel = notesService.trashNote(notesId,token);
 		Response response = new Response("Notes added to trash successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	/**
-	 * Purpose: Restore Note by Id
-	 * @Param: id,token
+	 * Purpose: Restore Note by notesId
+	 * @Param: notesId,token
 	 */
-	@PutMapping("/restorenote/{id}")
-	public ResponseEntity<Response> restoreNote(@PathVariable Long id,@RequestHeader String token) {
-		NotesModel notesModel = notesService.restoreNote(id,token);
+	@PutMapping("/restorenote/{notesId}")
+	public ResponseEntity<Response> restoreNote(@PathVariable Long notesId,@RequestHeader String token) {
+		NotesModel notesModel = notesService.restoreNote(notesId,token);
 		Response response = new Response("Note restored successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	/**
-	 * Purpose: Delete Note by Id
-	 * @Param: id,token
+	 * Purpose: Delete Note by notesId
+	 * @Param: notesId,token
 	 */
-	@DeleteMapping("/deletenote/{id}")
-	public ResponseEntity<Response> deleteNote(@PathVariable Long id,@RequestHeader String token) {
-		Response notesModel = notesService.deleteNote(id,token);
+	@DeleteMapping("/deletenote/{notesId}")
+	public ResponseEntity<Response> deleteNote(@PathVariable Long notesId,@RequestHeader String token) {
+		NotesModel notesModel = notesService.deleteNote(notesId,token);
 		Response response = new Response("Note deleted successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	/**
-	 * Purpose: Change Note color by id
-	 * @Param: id,token,color
+	 * Purpose: Change Note color by notesId
+	 * @Param: notesId,token,color
 	 */
-	@PutMapping("/changenotecolor/{id}")
-	public ResponseEntity<Response> changeNoteColor(@PathVariable Long id,@RequestParam String color,@RequestHeader  String token) {
-		NotesModel notesModel = notesService.changeNoteColor(id,color,token);
+	@PutMapping("/changenotecolor/{notesId}")
+	public ResponseEntity<Response> changeNoteColor(@PathVariable Long notesId,@RequestParam String color,@RequestHeader  String token) {
+		NotesModel notesModel = notesService.changeNoteColor(notesId,color,token);
 		Response response = new Response("Note color changed successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	/**
-	 * Purpose: Pin Note by Id
-	 * @Param: id,token
+	 * Purpose: Pin Note by notesId
+	 * @Param: notesId,token
 	 */
-	@PutMapping("/pinnote/{id}")
-	public ResponseEntity<Response> pinNote(@PathVariable Long id,@RequestHeader  String token) {
-		NotesModel notesModel = notesService.pinNote(id,token);
+	@PutMapping("/pinnote/{notesId}")
+	public ResponseEntity<Response> pinNote(@PathVariable Long notesId,@RequestHeader  String token) {
+		NotesModel notesModel = notesService.pinNote(notesId,token);
 		Response response = new Response("Note pinned successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	/**
-	 * Purpose: Unpin Note by Id
-	 * @Param: id,token
+	 * Purpose: Unpin Note by notesId
+	 * @Param: notesId,token
 	 */
-	@PutMapping("/unpinnote/{id}")
-	public ResponseEntity<Response> unPinNote(@PathVariable Long id,@RequestHeader  String token) {
-		NotesModel notesModel = notesService.unPinNote(id,token);
+	@PutMapping("/unpinnote/{notesId}")
+	public ResponseEntity<Response> unPinNote(@PathVariable Long notesId,@RequestHeader  String token) {
+		NotesModel notesModel = notesService.unPinNote(notesId,token);
 		Response response = new Response("Note unpinned successfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
@@ -213,22 +213,22 @@ public class NotesController {
 
 	/**
 	 * Purpose: to add collaborators to notes 
-	 * @Param: emailid,id,collaborator
+	 * @Param: emailid,notesId,collaborator
 	 */
 	@PutMapping("/addcollaborator/{emailId}")
-	public ResponseEntity<Response> addCollaborator(@PathVariable String emailId,@RequestParam Long id,@RequestParam List<String> collaborators) {
-		NotesModel notesModel = notesService.addCollaborator(emailId,id,collaborators);
+	public ResponseEntity<Response> addCollaborator(@RequestParam Long notesId,@RequestParam String collaborator,@RequestHeader String token ) {
+		NotesModel notesModel = notesService.addCollaborator(notesId,collaborator,token);
 		Response response = new Response("collaborated sucessfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Purpose: To set remainder time
-	 * @Param: remainder time,token,id
+	 * @Param: remainder time,token,notesId
 	 */
-	@PutMapping("/setremaindertime/{id}")
-	public ResponseEntity<Response> setRemainderTime(@RequestParam String remainderTime,@RequestHeader String token,@PathVariable Long id) {
-		NotesModel notesModel = notesService.setRemainderTime(remainderTime,token,id);
+	@PutMapping("/setremaindertime/{notesId}")
+	public ResponseEntity<Response> setRemainderTime(@RequestParam String remainderTime,@RequestHeader String token,@PathVariable Long notesId) {
+		NotesModel notesModel = notesService.setRemainderTime(remainderTime,token,notesId);
 		Response response = new Response("Remainder time set sucessfully", 200, notesModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}

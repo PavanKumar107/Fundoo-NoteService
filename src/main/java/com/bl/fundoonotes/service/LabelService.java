@@ -43,8 +43,10 @@ public class LabelService implements ILabelService {
 	public LabelModel addLabel(LabelDto labelDto, String token) {
 		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
+			Long userId = tokenUtil.decodeToken(token);
 			LabelModel model = new LabelModel(labelDto);
 			model.setRegisterDate(LocalDateTime.now());
+			model.setUserId(userId);
 			labelRepository.save(model);
 			return model;
 		}
@@ -53,10 +55,10 @@ public class LabelService implements ILabelService {
 
 	//Purpose:Service to update label
 	@Override
-	public LabelModel updateLabel(LabelDto labelDto, Long id,String token) {
+	public LabelModel updateLabel(LabelDto labelDto, Long labelId,String token) {
 		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
-			Optional<LabelModel>isLabelPresent = labelRepository.findById(id);
+			Optional<LabelModel>isLabelPresent = labelRepository.findById(labelId);
 			if(isLabelPresent.isPresent()) {
 				isLabelPresent.get().setLabelName(labelDto.getLabelName());
 				isLabelPresent.get().setUpdateDate(LocalDateTime.now());
@@ -85,10 +87,10 @@ public class LabelService implements ILabelService {
 
 	//Purpose:Method to delete the label
 	@Override
-	public Response deleteLabel(Long id, String token) {
+	public Response deleteLabel(Long labelId, String token) {
 		boolean isUserPresent = restTemplate.getForObject("http://Fundoo-UserService:8066/user/validateuser/" + token, Boolean.class);
 		if (isUserPresent) {
-			Optional<LabelModel> isIdPresent = labelRepository.findById(id);
+			Optional<LabelModel> isIdPresent = labelRepository.findById(labelId);
 			if(isIdPresent.isPresent()) {
 				return new Response("label deleted Successfully", 200, isIdPresent.get());
 			} else {

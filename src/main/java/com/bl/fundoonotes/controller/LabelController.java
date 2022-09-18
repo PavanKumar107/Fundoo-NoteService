@@ -23,10 +23,10 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 @RestController
 @RequestMapping("/label")
 public class LabelController {
-	
+
 	@Autowired
 	ILabelService labelService;
-	
+
 	/**
 	 * Purpose: Create label
 	 * @Param: labelDto,token
@@ -37,37 +37,37 @@ public class LabelController {
 		Response response = new Response("Label created successfully", 200, labelModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Purpose: Update labels
 	 * @Param: labelDto,id,token
 	 */
-	@PutMapping("/updatelabel/{id}")
-	public ResponseEntity<Response> updateLabel(@Valid@RequestBody LabelDto labelDto,@PathVariable Long id ,@RequestHeader String token) {
-		LabelModel labelModel = labelService.updateLabel(labelDto,id,token);
+	@PutMapping("/updatelabel/{labelId}")
+	public ResponseEntity<Response> updateLabel(@Valid@RequestBody LabelDto labelDto,@PathVariable Long labelId ,@RequestHeader String token) {
+		LabelModel labelModel = labelService.updateLabel(labelDto,labelId,token);
 		Response response = new Response("Label updated successfully", 200, labelModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 
-/**
- * Purpose: fetch all labels
- * @Param: token
- */
+	/**
+	 * Purpose: fetch all labels
+	 * @Param: token
+	 */
 	@GetMapping("/getalllabels")
 	public ResponseEntity<Response> getAllLabels(@RequestHeader String token) {
 		List<LabelModel> labelModel = labelService.getAllLabels(token);
 		Response response = new Response("Fetching all labels successfully", 200, labelModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Purpose: Delete label by Id
 	 * @Param: id,token
 	 */
-	@DeleteMapping("/deletelabel/{id}")
-	public ResponseEntity<Response> deleteLabel(@PathVariable Long id,@RequestHeader String token) {
-		Response labelModel = labelService.deleteLabel(id,token);
+	@DeleteMapping("/deletelabel/{labelId}")
+	public ResponseEntity<Response> deleteLabel(@PathVariable Long labelId,@RequestHeader String token) {
+		Response labelModel = labelService.deleteLabel(labelId,token);
 		Response response = new Response("Label deleted successfully", 200, labelModel);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}

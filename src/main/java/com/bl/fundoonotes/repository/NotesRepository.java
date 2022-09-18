@@ -1,5 +1,6 @@
 package com.bl.fundoonotes.repository;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,7 +23,11 @@ public interface NotesRepository extends JpaRepository<NotesModel, Long>{
 
 	@Query(value = "select * from notes where is_archieve = true", nativeQuery = true)
 	List<NotesModel> findAllByisArchieve();
-	
+
 	@Query(value = "select * from notes where Trash = true", nativeQuery = true)
 	List<NotesModel> findAllByTrash();
+
+	Optional<NotesModel> findByUserIdAndNotesId(Long userId, Long notesId);
+
+	List<NotesModel> findByUserId(Long userId);
 }

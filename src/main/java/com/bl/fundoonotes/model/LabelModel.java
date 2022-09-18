@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import com.bl.fundoonotes.DTO.LabelDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,20 +28,24 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class LabelModel {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	
+	private Long labelId;
+
 	private String labelName;
 
 	private Long userId;
-	
+
 	private Long noteId;
-	
+
 	private LocalDateTime registerDate;
 
 	private LocalDateTime updateDate;
+
+	@JsonIgnore
+	@ManyToMany
+	private List<NotesModel> notes;
 
 	public LabelModel(LabelDto labelDto) {
 		this.labelName = labelDto.getLabelName();
